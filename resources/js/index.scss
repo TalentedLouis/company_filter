@@ -1,0 +1,60 @@
+@import "./roboto";
+
+#navigateTo,
+#pageIndex {
+    height: 35px;
+}
+
+#pageIndex {
+    width: 40px;
+    box-sizing: border-box;
+}
+
+:root {
+    --grey: #535353;
+    --green: #1efd92;
+    --red: #e53222;
+    --blue: #284eb2;
+    --darkblue: #15329a;
+    --white: #ffffff;
+    --text-opacity: 1;
+}
+
+.container {
+    max-width: 1290px;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+
+* {
+    // color     : white;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+body {
+    // background-color: var(--grey);
+    // background-color: transparent;
+    font-family: Roboto;
+    height: 100vh;
+    font-size: 14px;
+    color: #888;
+    font-weight: 400;
+    background: #f4f7fa;
+    position: relative;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 16px;
+    }
+}

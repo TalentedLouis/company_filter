@@ -1,0 +1,10 @@
+/node_modules
+/public/build
+/storage/*.key
+/vendor
+.env
+.env.example
+.styleci.yml
+.phpunit.xml
+package-lock.json
+composer.lock

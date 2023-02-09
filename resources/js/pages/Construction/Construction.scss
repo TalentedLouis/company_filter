@@ -1,0 +1,46 @@
+.table_construction_delete_btn {
+  font-size: 26px;
+  color: #6c757d;
+
+  &:hover {
+    color: #5a6268;
+  }
+}
+
+.table_name_add_input {
+  width: 100%;
+}
+
+// .table_construction_add_btn {
+//   color: #007bff;
+//   font-size: 26px;
+//   &:hover {
+//     color: #0069d9;
+//   }
+// }
+
+.construction_add_submit_btn {
+  color: #007bff;
+  font-size: 26px;
+  position: absolute;
+  top: 66px;
+  z-index: 101;
+  padding-left: 12px;
+  &:hover {
+    color: #0069d9;
+  }
+}
+
+.table_add_input {
+  padding: 8px 15px;
+  position: absolute;
+  z-index: 101;
+  top: 66px;
+  margin: 0 12px;
+
+  &:focus {
+    border-width: 2px;
+    border-color: #007bff;
+    box-shadow: none;
+  }
+}
