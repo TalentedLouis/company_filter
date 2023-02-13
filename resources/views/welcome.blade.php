@@ -15,7 +15,7 @@
   <!-- <link rel="stylesheet" href="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table-all.min.css">
   </link>
   <script src="https://npmcdn.com/react-bootstrap-table/dist/react-bootstrap-table.min.js"></script> -->
-  <title>支払管理システム</title>
+  <title>企業のリスト抽出</title>
 
   {{ vite_assets() }}
 </head>
