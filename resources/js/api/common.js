@@ -111,7 +111,7 @@ const commonApi = {
     //     }),
 
     getCompanies: (params) =>
-        axios.post(`${API_URL}/companies`, {params},  {
+        axios.post(`${API_URL}/companies`, params,  {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("token"),
             },

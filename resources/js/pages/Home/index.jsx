@@ -1,120 +1,219 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux'
 
-import {MenuItem, Select, FormControl, InputLabel, TextField, Box} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
-import { Dayjs } from 'dayjs';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { DataGrid } from '@mui/x-data-grid';
+import {MenuItem, Select, FormControl, InputLabel, TextField, Box, Table, TableHead, TableBody, TableCell, TableContainer, TablePagination, TableRow, Paper, IconButton} from '@mui/material';
 
-import { Table } from 'smart-webcomponents-react/table';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import LastPageIcon from '@mui/icons-material/LastPage';
 
 import { startAction, endAction, showToast } from '../../actions/common'
 
 import agent from '../../api/'
 
-// import styles from './Home.module.scss';
+const columns = [ 
+  { id: 'name', label: 'Name', minWidth: 200, align: 'center' },
+  { id: 'furi', label: 'Furi', minWidth: 200, align: 'center' },
+  { id: 'en_name', label: 'En Name', minWidth: 200, align: 'center' },
+  { id: 'category_id', label: 'Category Id', minWidth: 150, align: 'center' },
+  { id: 'url', label: 'URL', minWidth: 300, align: 'center' },
+  { id: 'contact_url', label: 'Contact URL', minWidth: 300, align: 'center' },
+  { id: 'zip', label: 'Zip', minWidth: 100, align: 'center' },
+  { id: 'pref', label: 'Pref', minWidth: 80, align: 'center' },
+  { id: 'address', label: 'Address', minWidth: 300, align: 'center' },
+  { id: 'tel', label: 'Tel', minWidth: 150, align: 'center' },
+  { id: 'dainame', label: 'Dainame', minWidth: 150, align: 'center' },
+  { id: 'corporate_number', label: 'Corporate Number', minWidth: 150, align: 'center' },
+  { id: 'established', label: 'Established', minWidth: 150, align: 'center' },
+  { id: 'capital', label: 'Capital', minWidth: 150, align: 'center' },
+  { id: 'earnings', label: 'Earnings', minWidth: 150, align: 'center' },
+  { id: 'employees', label: 'Employees', minWidth: 100, align: 'center' },
+  { id: 'category_txt', label: 'Category TXT', minWidth: 200, align: 'center' },
+  { id: 'houjin_flg', label: 'Houjin Flg', minWidth: 150, align: 'center' },
+  { id: 'status', label: 'Status', minWidth: 150, align: 'center' },
+  { id: 'created', label: 'Created', minWidth: 150, align: 'center' },
+  { id: 'modified', label: 'Modified', minWidth: 150, align: 'center' },
+];
 
-const JP_TEXT = {
-  // Column menu text
-  columnMenuUnsort: 'ソート解除', // Unsort
-  columnMenuSortAsc: 'ASC で並べ替え', // Sort by ASC
-  columnMenuSortDesc: 'DESCで並べ替え', // Sort by DESC
-  columnMenuFilter: 'フィルター', // Filter
-  columnMenuHideColumn: '列を非表示', // Hide column
-  columnMenuShowColumns: '列を表示', // Show columns, 
+const units = [
+  {id: 1, label: '全部'},
+  {id: 2, label: '5000万円以下'},
+  {id: 3, label: '5000万円以上'},
+  {id: 4, label: '1億円以上'},
+  {id: 5, label: '10億円以上'},
+  {id: 5, label: '50億円以上'}
+]
 
-  // Columns panel text
-  columnsPanelTextFieldLabel: '列を検索', //Find column
-  columnsPanelTextFieldPlaceholder: 'コラムのタイトル', //Column title
-  columnsPanelShowAllButton: 'すべて表示する', //Show all
-  columnsPanelHideAllButton: 'すべて非表示', // Hide all
+const prefecturesList = [
+  {label: "全部", value: 0 },
+  {label: "北海道", value: "北海道" },
+  {label: "青森県", value: "青森県" },
+  {label: "岩手県", value: "岩手県" },
+  {label: "宮城県", value: "宮城県" },
+  {label: "秋田県", value: "秋田県" },
+  {label: "山形県", value: "山形県" },
+  {label: "福島県", value: "福島県" },
+  {label: "茨城県", value: "茨城県" },
+  {label: "栃木県", value: "栃木県" },
+  {label: "群馬県", value: "群馬県" },
+  {label: "埼玉県", value: "埼玉県" },
+  {label: "千葉県", value: "千葉県" },
+  {label: "東京都", value: "東京都" },
+  {label: "神奈川県", value: "神奈川県" },
+  {label: "新潟県", value: "新潟県" },
+  {label: "富山県", value: "富山県" },
+  {label: "石川県", value: "石川県" },
+  {label: "福井県", value: "福井県" },
+  {label: "山梨県", value: "山梨県" },
+  {label: "長野県", value: "長野県" },
+  {label: "岐阜県", value: "岐阜県" },
+  {label: "静岡県", value: "静岡県" },
+  {label: "愛知県", value: "愛知県" },
+  {label: "三重県", value: "三重県" },
+  {label: "滋賀県", value: "滋賀県" },
+  {label: "京都府", value: "京都府" },
+  {label: "大阪府", value: "大阪府" },
+  {label: "兵庫県", value: "兵庫県" },
+  {label: "奈良県", value: "奈良県" },
+  {label: "和歌山県", value: "和歌山県" },
+  {label: "鳥取県", value: "鳥取県" },
+  {label: "島根県", value: "島根県" },
+  {label: "岡山県", value: "岡山県" },
+  {label: "広島県", value: "広島県" },
+  {label: "山口県", value: "山口県" },
+  {label: "徳島県", value: "徳島県" },
+  {label: "香川県", value: "香川県" },
+  {label: "愛媛県", value: "愛媛県" },
+  {label: "高知県", value: "高知県" },
+  {label: "福岡県", value: "福岡県" },
+  {label: "佐賀県", value: "佐賀県" },
+  {label: "長崎県", value: "長崎県" },
+  {label: "熊本県", value: "熊本県" },
+  {label: "大分県", value: "大分県" },
+  {label: "宮崎県", value: "宮崎県" },
+  {label: "鹿児島県", value: "鹿児島県" },
+  {label: "沖縄県", value: "沖縄県" }
+];
 
-  // Filter panel text
-  filterPanelColumns: 'コラム', //Columns
-  filterPanelOperators: 'オペレーター', // Operator
-  filterPanelInputLabel: '価値', // Value
-  filterPanelInputPlaceholder: 'フィルター値', // Filter value
+const industryList = [
+  {id: 0, label: '全部', value: 0 },
+  {id: 1, label: 'エンタメ業界', value: 'エンタメ業界の会社' },
+  {id: 2, label: 'IT業界', value: 'IT業界の会社'},
+  {id: 3, label: 'アパレル・美容業界', value: 'アパレル・美容業界の会社'},
+  {id: 4, label: '建設・工事業界', value: '建設・工事業界の会社'},
+  {id: 5, label: 'コンサルティング業界の会社', value: 'コンサルティング業界'}
+];
 
-  // Filter operators text
-  filterOperatorContains: '含む', // contains
-  filterOperatorEquals: '等しい', // equals
-  filterOperatorStartsWith: 'で始まる', // starts with
-  filterOperatorEndsWith: 'で終わる', // ends with
-  filterOperatorIsEmpty: '空です', //is empty
-  filterOperatorIsNotEmpty: '空ではありません', // is not empty
-  filterOperatorIsAnyOf: 'のいずれかです', // is any of
+function TablePaginationActions(props) {
+  const theme = useTheme();
+  const { count, page, rowsPerPage, onPageChange } = props;
+
+  const handleFirstPageButtonClick = (event) => {
+    onPageChange(event, 0);
+  };
+
+  const handleBackButtonClick = (event) => {
+    onPageChange(event, page - 1);
+  };
+
+  const handleNextButtonClick = (event) => {
+    onPageChange(event, page + 1);
+  };
+
+  const handleLastPageButtonClick = (event) => {
+    onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+  };
+
+  return (
+    <Box sx={{ flexShrink: 0, ml: 2.5 }}>
+      <IconButton
+        onClick={handleFirstPageButtonClick}
+        disabled={page === 0}
+        aria-label="first page"
+      >
+        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+      </IconButton>
+      <IconButton
+        onClick={handleBackButtonClick}
+        disabled={page === 0}
+        aria-label="previous page"
+      >
+        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+      </IconButton>
+      <IconButton
+        onClick={handleNextButtonClick}
+        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        aria-label="next page"
+      >
+        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+      </IconButton>
+      <IconButton
+        onClick={handleLastPageButtonClick}
+        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        aria-label="last page"
+      >
+        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+      </IconButton>
+    </Box>
+  );
+}
+
+TablePaginationActions.propTypes = {
+  count: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
 };
-
-
-const columns = [
-  // { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'name', headerName: 'Name', width: 200 },
-  { field: 'furi', headerName: 'Furi', width: 200 },
-  { field: 'en_name', headerName: 'En Name', width: 200 },
-  { field: 'category_id', headerName: 'Category Id', width: 150 },
-  { field: 'url', headerName: 'URL', width: 300 },
-  { field: 'contact_url', headerName: 'Contact URL', width: 300 },
-  { field: 'zip', headerName: 'Zip', width: 100 },
-  { field: 'pref', headerName: 'Pref', width: 80 },
-  { field: 'address', headerName: 'Address', width: 300 },
-  { field: 'tel', headerName: 'Tel', width: 150 },
-  { field: 'dainame', headerName: 'Dainame', width: 150 },
-  { field: 'corporate_number', headerName: 'Corporate Number', width: 150 },
-  { field: 'established', headerName: 'Established', width: 150 },
-  { field: 'capital', headerName: 'Capital', width: 150 },
-  { field: 'earnings', headerName: 'Earnings', width: 150 },
-  { field: 'employees', headerName: 'Employees', width: 100 },
-  { field: 'category_txt', headerName: 'Category TXT', width: 200 },
-  { field: 'houjin_flg', headerName: 'Houjin Flg', width: 150 },
-  { field: 'status', headerName: 'Status', width: 150 },
-  { field: 'created', headerName: 'Created', width: 150 },
-  { field: 'modified', headerName: 'Modified', width: 150 },
-  // {
-  //   field: 'fullName',
-  //   headerName: 'Full name',
-  //   description: 'This column has a value getter and is not sortable.',
-  //   sortable: false,
-  //   width: 160,
-  //   valueGetter: (params) =>
-  //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  // },
-];
-
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
-
 
 const Home = (props) => {
   const dispatch = useDispatch()
-  const [age, setAge] = useState('');
-  const [value, setValue] = useState('');
   const [companies, setCompanies] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [totalCount, setTotalCount]=useState(0);
   
+  // search params
+  const [searchParams, setSearchParams] = useState({
+    prefectures : 0,
+    industry : 0,
+    siteUrl : 0,
+    capital : '',
+    amountOfSales : '',
+    freeKeyword : '',
+    establishDateFrom: '',
+    establishDateTo: ''
+  });
+
   useEffect(() => {
-    getCompanyData()
+    fectchCompanyData()
   }, [])
 
-  const getCompanyData = async() => {
+  useEffect(() => {
+    fectchCompanyData()
+  }, [searchParams, page, rowsPerPage])
+  
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const fectchCompanyData = async() => {
+    searchParams.page = Number(page) + 1;
+    searchParams.rowsPerPage = rowsPerPage;
     dispatch(startAction())
     try {
-      const resCompanies = await agent.common.getCompanies()
-      console.log('--- get company data ---');
-      console.log(resCompanies);
+      const resCompanies = await agent.common.getCompanies(searchParams)
       if (resCompanies.data.success) {
-        setCompanies([...resCompanies.data.data])
+        setCompanies(resCompanies.data.data.data);
+        setTotalCount(resCompanies.data.data.total)
       }
       dispatch(endAction())
     } catch (error) {
@@ -131,7 +230,7 @@ const Home = (props) => {
   }
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setSearchParams({...searchParams, [event.target.name]: event.target.value});
   };
 
   return (
@@ -140,20 +239,23 @@ const Home = (props) => {
       <div className="page-block">
         <div className="row align-items-center">
           <div className="col-md-12">
-            {/* <div className="page-header-title">
+            <div className="page-header-title">
               <FormControl sx={{ m: 1, minWidth: 250 }}>
                 <InputLabel id="demo-simple-select-label">都道府県</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={age}
+                  name="prefectures"
+                  value={searchParams.prefectures}
                   label="都道府県"
                   onChange={handleChange}
                 >
-                  <MenuItem value={'all'}>All</MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                   {prefecturesList.map((item, index )=> {
+                      return (
+                        <MenuItem value={item.value} key={index}>{item.label}</MenuItem>
+                      )
+                    })
+                  }
                 </Select>
               </FormControl>
 
@@ -162,14 +264,17 @@ const Home = (props) => {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={age}
+                  name="industry"
+                  value={searchParams.industry}
                   label="業種"
                   onChange={handleChange}
                 >
-                  <MenuItem value={'all'}>All</MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  {industryList.map((item, index) => {
+                      return (
+                        <MenuItem value={item.value} key={index}>{item.label}</MenuItem>
+                      )
+                    })
+                  }
                 </Select>
               </FormControl>
 
@@ -178,14 +283,14 @@ const Home = (props) => {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={age}
+                  name="siteUrl"
+                  value={searchParams.siteUrl}
                   label="サイトURL"
                   onChange={handleChange}
                 >
-                  <MenuItem value={'all'}>All</MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={0}>全部</MenuItem>
+                  <MenuItem value={1}>有</MenuItem>
+                  <MenuItem value={2}>無</MenuItem>
                 </Select>
               </FormControl>
 
@@ -194,14 +299,17 @@ const Home = (props) => {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={age}
+                  name="capital"
+                  value={searchParams.capital}
                   label="資本金"
                   onChange={handleChange}
                 >
-                  <MenuItem value={'all'}>All</MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  {units.map((unit, index)=>{
+                      return (
+                        <MenuItem value={unit.id} key={index}>{unit.label}</MenuItem>
+                      )
+                    })
+                  }
                 </Select>
               </FormControl>
 
@@ -210,50 +318,50 @@ const Home = (props) => {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={age}
+                  name="amountOfSales"
+                  value={searchParams.amountOfSales}
                   label="売上高"
                   onChange={handleChange}
                 >
-                  <MenuItem value={'all'}>All</MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                 {units.map((unit, index)=>{
+                      return (
+                        <MenuItem value={unit.id} key={index}>{unit.label}</MenuItem>
+                      )
+                    })
+                  }
                 </Select>
               </FormControl>
               
               <FormControl sx={{ m: 1, minWidth: 250 }}>
-                <TextField id="outlined-basic" label="フリーキーワード" variant="outlined" />
+                <TextField id="outlined-basic" label="フリーキーワード" name="freeKeyword" variant="outlined" value={searchParams.freeKeyword} onChange={handleChange} />
               </FormControl>
 
               <FormControl sx={{ m: 1, minWidth: 250 }}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    label="From"
-                    value={value}
-                    onChange={(newValue) => {
-                      setValue(newValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </LocalizationProvider>
+                <TextField
+                  id="date"
+                  label="設立年月日 From"
+                  type="date"
+                  defaultValue={searchParams.establishDateFrom}
+                  onChange={handleChange}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
               </FormControl>
 
               <FormControl sx={{ m: 1, minWidth: 250 }}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DatePicker
-                    label="To"
-                    value={value}
-                    onChange={(newValue) => {
-                      setValue(newValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </LocalizationProvider>
+                <TextField
+                  id="date"
+                  label="設立年月日 To"
+                  type="date"
+                  defaultValue={searchParams.establishDateTo}
+                  onChange={handleChange}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
               </FormControl>
-            </div> */}
-            <ul className="breadcrumb">
-              
-            </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -270,16 +378,54 @@ const Home = (props) => {
                 <div className="row">
                   <div className="col-md-12">
                     <div className="table_container">
-                    <Box sx={{ height: 600, width: '100%' }}>
-                      <DataGrid
-                        localeText={JP_TEXT}
-                        rows={companies}
-                        columns={columns}
-                        pageSize={10}
-                        rowsPerPageOptions={[5]}
-                        // checkboxSelection
-                      />
-                      </Box>
+                      <Paper sx={{ width: '100%' }}>
+                        <TableContainer sx={{ maxHeight: 440 }}>
+                          <Table stickyHeader aria-label="sticky table">
+                            <TableHead>
+                              <TableRow>
+                                {columns.map((column) => (
+                                  <TableCell
+                                    key={column.id}
+                                    align={column.align}
+                                    style={{ minWidth: column.minWidth }}
+                                  >
+                                    {column.label}
+                                  </TableCell>
+                                ))}
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {companies
+                                .map((item) => {
+                                  return (
+                                    <TableRow key={item.id}>
+                                      {columns.map((column) => {
+                                        const value = item[column.id];
+                                        return (
+                                          <TableCell key={column.id} align={column.align}>
+                                            {column.format && typeof value === 'number'
+                                              ? column.format(value)
+                                              : value}
+                                          </TableCell>
+                                        );
+                                      })}
+                                    </TableRow>
+                                  );
+                                })}
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                        <TablePagination
+                          rowsPerPageOptions={[5, 10, 25, 100]}
+                          component="div"
+                          count={totalCount}
+                          rowsPerPage={rowsPerPage}
+                          page={page}
+                          onPageChange={handleChangePage}
+                          onRowsPerPageChange={handleChangeRowsPerPage}
+                          ActionsComponent={TablePaginationActions}
+                        />
+                      </Paper>
                     </div>
                   </div>
                 </div>
@@ -292,5 +438,7 @@ const Home = (props) => {
   </>
   )
 }
+
+
 
 export default Home

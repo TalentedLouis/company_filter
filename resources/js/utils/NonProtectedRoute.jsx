@@ -23,7 +23,7 @@ const NonProtectedRoute = props => {
           if (res.data.email) {
             console.log(res)
             dispatch(login(res.data))
-            navigate("/article")
+            navigate("/home")
           }
         } catch (error) {
           if (error.response != undefined && error.response.status >= 400 && error.response.status <= 415) {

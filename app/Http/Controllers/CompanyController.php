@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use Illuminate\Http\Request;
 
+use Illuminate\Pagination\Paginator;
+
 class CompanyController extends Controller
 {
     /**
@@ -12,14 +14,44 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request )
     {
-        //
-        $companies = Company::all();
-        return response()->json([
-            'success' => true,
-            'data' => $companies,
-        ]);
+        // return $request;
+        if($request){
+            $rows_per_page = $request-> rowsPerPage;
+            $page = $request -> page;
+
+            $prefectures = $request->prefectures;
+            $industry = $request->industry;
+            $site_url = $request->siteUrl;
+            $capital = $request->capital;
+            $amount_of_sales = $request->amountOfSales;
+            $free_keyword = $request->freeKeyword;
+            $establish_date_from = $request->establishDateFrom;
+            $establish_date_to = $request->establishDateTo;
+
+            $companies = Company::where(function ($query) use ($prefectures, $industry, $site_url, $free_keyword, $establish_date_from, $establish_date_to, $page, $rows_per_page) {
+                if($prefectures && $prefectures != 0 )
+                   $query->where('address', 'LIKE', $prefectures.'%');
+                if($industry && $industry != 0 )
+                   $query->where('category_id', $industry);
+                if($free_keyword)
+                   $query->where('category_txt', 'Like', '%'.$free_keyword.'%');
+                if($site_url === 1)
+                   $query->where('url', '!=', '');
+                if($site_url === 2)
+                   $query->where('url', '');
+                if($page)
+                    $query->skip($rows_per_page * $page);
+            })->paginate($rows_per_page);
+
+
+            return response()->json([
+                'success' => true,
+                'data' => $companies
+            ]);
+        }
+        
     }
 
     /**
