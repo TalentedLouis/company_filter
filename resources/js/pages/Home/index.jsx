@@ -244,7 +244,7 @@ const Home = (props) => {
         console.log('--- fetch company data success ---')
         console.log(resCompanies.data.total_data)
         setCompanies(resCompanies.data.data.data);
-        setAllCompanies(resCompanies.data.total_data)
+        // setAllCompanies(resCompanies.data.total_data)
         setTotalCount(resCompanies.data.data.total)
       }
       dispatch(endAction())
@@ -418,7 +418,7 @@ const Home = (props) => {
               <div className="card-header" style={{display: 'flex', justifyContent:'space-between'}}>
                 <h5 className="card-title">企業リスト</h5>
                 {
-                  allCompanies && <CSVLink data={allCompanies} headers={headers} filename={"企業リスト.csv"}>
+                  companies && <CSVLink data={companies} headers={headers} filename={"企業リスト.csv"}>
                     <FileDownloadIcon />CSV File
                     {/* <img src='/assets/image/icon_csv.png' style={{width:'30px', height: '30px'}} alt="csv_icon" /> */}
                   </CSVLink>

@@ -61,13 +61,12 @@ class CompanyController extends Controller
                    $query->where('url', '');
                 if($page)
                     $query->skip($rows_per_page * $page);
-            });
-            $total_companies = $src_companies->get();
-            $companies = $src_companies->paginate($rows_per_page);
+            })->paginate($rows_per_page);
+            // $total_companies = $src_companies->get();
+            // $companies = $src_companies->paginate($rows_per_page);
             return response()->json([
                 'success' => true,
-                'data' => $companies,
-                'total_data'=>$total_companies
+                'data' => $companies
             ]);
         }   
     }
