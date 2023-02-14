@@ -30,24 +30,44 @@ class CompanyController extends Controller
             $establish_date_from = $request->establishDateFrom;
             $establish_date_to = $request->establishDateTo;
 
-            $companies = Company::where(function ($query) use ($prefectures, $industry, $site_url, $free_keyword, $establish_date_from, $establish_date_to, $page, $rows_per_page) {
+            $src_companies = Company::where(function ($query) use ($prefectures, $industry, $site_url, $free_keyword, $establish_date_from, $establish_date_to, $page, $rows_per_page) {
                 if($prefectures && $prefectures != 0 )
                    $query->where('address', 'LIKE', $prefectures.'%');
                 if($industry && $industry != 0 )
                    $query->where('category_id', 'LIKE', '%'.$industry.'%');
                 if($free_keyword)
-                   $query->where('category_txt', 'Like', '%'.$free_keyword.'%');
+                   $query->orWhere('name', 'Like', '%'.$free_keyword.'%')
+                         ->orWhere('furi', 'Like', '%'.$free_keyword.'%')
+                         ->orWhere('en_name', 'Like', '%'.$free_keyword.'%')
+                         ->orWhere('category_id', 'Like', '%'.$free_keyword.'%')
+                         ->orWhere('url', 'Like', '%'.$free_keyword.'%')
+                         ->orWhere('contact_url', 'Like', '%'.$free_keyword.'%')
+                         ->orWhere('zip', 'Like', '%'.$free_keyword.'%')
+                         ->orWhere('pref', 'Like', '%'.$free_keyword.'%')
+                         ->orWhere('address', 'Like', '%'.$free_keyword.'%')
+                         ->orWhere('tel', 'Like', '%'.$free_keyword.'%')
+                         ->orWhere('dainame', 'Like', '%'.$free_keyword.'%')
+                         ->orWhere('corporate_number', 'Like', '%'.$free_keyword.'%')
+                         ->orWhere('established', 'Like', '%'.$free_keyword.'%')
+                         ->orWhere('capital', 'Like', '%'.$free_keyword.'%')
+                         ->orWhere('earnings', 'Like', '%'.$free_keyword.'%')
+                         ->orWhere('employees', 'Like', '%'.$free_keyword.'%')
+                         ->orWhere('category_txt', 'Like', '%'.$free_keyword.'%')
+                         ->orWhere('houjin_flg', 'Like', '%'.$free_keyword.'%')
+                         ->orWhere('status', 'Like', '%'.$free_keyword.'%');
                 if($site_url === 1)
                    $query->where('url', '!=', '');
                 if($site_url === 2)
                    $query->where('url', '');
                 if($page)
                     $query->skip($rows_per_page * $page);
-            })->paginate($rows_per_page);
-
+            });
+            $total_companies = $src_companies->get();
+            $companies = $src_companies->paginate($rows_per_page);
             return response()->json([
                 'success' => true,
-                'data' => $companies
+                'data' => $companies,
+                'total_data'=>$total_companies
             ]);
         }   
     }
@@ -116,5 +136,10 @@ class CompanyController extends Controller
     public function destroy(Company $company)
     {
         //
+    }
+
+    public function export_csv(Request $request)
+    {
+        print($request);
     }
 }

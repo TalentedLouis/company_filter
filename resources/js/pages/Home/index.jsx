@@ -6,14 +6,17 @@ import { useTheme } from '@mui/material/styles';
 
 import {MenuItem, Select, FormControl, InputLabel, TextField, Box, Table, TableHead, TableBody, TableCell, TableContainer, TablePagination, TableRow, Paper, IconButton, Typography} from '@mui/material';
 
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 
-import { startAction, endAction, showToast } from '../../actions/common'
+import { startAction, endAction, showToast } from '../../actions/common';
 
-import agent from '../../api/'
+import agent from '../../api/';
+
+import { CSVLink } from "react-csv";
 
 const columns = [ 
   { id: 'name', label: '会社名', minWidth: 200, align: 'center' },
@@ -37,6 +40,30 @@ const columns = [
   // { id: 'status', label: 'Status', minWidth: 150, align: 'center' },
   // { id: 'created', label: 'Created', minWidth: 150, align: 'center' },
   // { id: 'modified', label: 'Modified', minWidth: 150, align: 'center' },
+];
+
+const headers = [
+  { label: '会社名', key: 'name'},
+  { label: 'Furi', key: 'furi'},
+  { label: '英文名', key: 'en_name'},
+  { label: '業種', key: 'category_id'},
+  { label: 'URL', key: 'url'},
+  { label: 'お問い合わせフォーム', key: 'contact_url'},
+  { label: 'Zip', key: 'zip'},
+  { label: 'Pref', key: 'pref'},
+  { label: '住所', key: 'address'},
+  { label: 'TEL', key: 'tel'},
+  { label: 'Dainame', key: 'dainame'},
+  { label: 'Corporate Number', key: 'corporate_number'},
+  { label: '設立年月日', key: 'established'},
+  { label: '資本金', key: 'capital'},
+  { label: '売上高', key: 'earnings'},
+  { label: 'Employees', key: 'employees'},
+  { label: 'フリーキーワード', key: 'category_txt'},
+  { label: 'Houjin Flg', key: 'houjin_flg'},
+  { label: 'Status', key: 'status'},
+  { label: 'Created', key: 'created'},
+  { label: 'Modified', key: 'modified'}
 ];
 
 const units = [
@@ -172,6 +199,7 @@ TablePaginationActions.propTypes = {
 const Home = (props) => {
   const dispatch = useDispatch()
   const [companies, setCompanies] = useState([]);
+  const [allCompanies, setAllCompanies] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(100);
   const [totalCount, setTotalCount]=useState(0);
@@ -206,15 +234,17 @@ const Home = (props) => {
   };
 
   const fectchCompanyData = async() => {
-    console.log('--- search params ---')
-    console.log(searchParams)
+    console.log('--- fetch company data ---')
     searchParams.page = Number(page) + 1;
     searchParams.rowsPerPage = rowsPerPage;
     dispatch(startAction())
     try {
       const resCompanies = await agent.common.getCompanies(searchParams)
       if (resCompanies.data.success) {
+        console.log('--- fetch company data success ---')
+        console.log(resCompanies.data.total_data)
         setCompanies(resCompanies.data.data.data);
+        setAllCompanies(resCompanies.data.total_data)
         setTotalCount(resCompanies.data.data.total)
       }
       dispatch(endAction())
@@ -234,6 +264,12 @@ const Home = (props) => {
   const handleChange = (event) => {
     setSearchParams({...searchParams, [event.target.name]: event.target.value});
   };
+
+  const downdloadCsv = () => {
+    // searchParams.page = Number(page) + 1;
+    // searchParams.rowsPerPage = rowsPerPage;
+    // window.location.href = (API_URL + "/companies/export_csv?" + searchParams) ;
+  }
 
   return (
     <>
@@ -333,10 +369,6 @@ const Home = (props) => {
                   }
                 </Select>
               </FormControl>
-              
-              <FormControl sx={{ m: 1, minWidth: 250 }}>
-                <TextField id="outlined-basic" label="フリーキーワード" name="freeKeyword" variant="outlined" value={searchParams.freeKeyword} onChange={handleChange} />
-              </FormControl>
 
               <FormControl sx={{ m: 1, minWidth: 250 }}>
                 <TextField
@@ -366,23 +398,31 @@ const Home = (props) => {
                 />
               </FormControl>
 
-              
+              <FormControl sx={{ m: 1, minWidth: 250 }}>
+                <TextField id="outlined-basic" label="フリーキーワード" name="freeKeyword" variant="outlined" value={searchParams.freeKeyword} onChange={handleChange} />
+              </FormControl>
             </div>
           </div>
           <div className="col-md-2 text-center">
-              <Typography variant="h5" gutterBottom>該当件数</Typography>
-              <Typography variant="h3">{totalCount}<span style={{fontSize: '15px'}}>件</span></Typography>
+            <Typography variant="h5" gutterBottom>該当件数</Typography>
+            <Typography variant="h3">{totalCount}<span style={{fontSize: '15px'}}>件</span></Typography>
           </div>
         </div>
       </div>
     </div>
     <div className="main-body">
       <div className="page-wrapper">
-        <div className="row">
+        <div className="row"> 
           <div className="col">
             <div className="card">
-              <div className="card-header">
+              <div className="card-header" style={{display: 'flex', justifyContent:'space-between'}}>
                 <h5 className="card-title">企業リスト</h5>
+                {
+                  allCompanies && <CSVLink data={allCompanies} headers={headers} filename={"企業リスト.csv"}>
+                    <FileDownloadIcon />CSV File
+                    {/* <img src='/assets/image/icon_csv.png' style={{width:'30px', height: '30px'}} alt="csv_icon" /> */}
+                  </CSVLink>
+                }
               </div>
               <div className="card-body">
                 <div className="row">
