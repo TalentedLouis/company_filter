@@ -199,7 +199,6 @@ TablePaginationActions.propTypes = {
 const Home = (props) => {
   const dispatch = useDispatch()
   const [companies, setCompanies] = useState([]);
-  const [allCompanies, setAllCompanies] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(100);
   const [totalCount, setTotalCount]=useState(0);
@@ -234,17 +233,13 @@ const Home = (props) => {
   };
 
   const fectchCompanyData = async() => {
-    console.log('--- fetch company data ---')
     searchParams.page = Number(page) + 1;
     searchParams.rowsPerPage = rowsPerPage;
     dispatch(startAction())
     try {
       const resCompanies = await agent.common.getCompanies(searchParams)
       if (resCompanies.data.success) {
-        console.log('--- fetch company data success ---')
-        console.log(resCompanies.data.total_data)
         setCompanies(resCompanies.data.data.data);
-        // setAllCompanies(resCompanies.data.total_data)
         setTotalCount(resCompanies.data.data.total)
       }
       dispatch(endAction())
@@ -264,12 +259,6 @@ const Home = (props) => {
   const handleChange = (event) => {
     setSearchParams({...searchParams, [event.target.name]: event.target.value});
   };
-
-  const downdloadCsv = () => {
-    // searchParams.page = Number(page) + 1;
-    // searchParams.rowsPerPage = rowsPerPage;
-    // window.location.href = (API_URL + "/companies/export_csv?" + searchParams) ;
-  }
 
   return (
     <>
@@ -488,7 +477,5 @@ const Home = (props) => {
   </>
   )
 }
-
-
 
 export default Home

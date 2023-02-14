@@ -30,7 +30,7 @@ class CompanyController extends Controller
             $establish_date_from = $request->establishDateFrom;
             $establish_date_to = $request->establishDateTo;
 
-            $src_companies = Company::where(function ($query) use ($prefectures, $industry, $site_url, $free_keyword, $establish_date_from, $establish_date_to, $page, $rows_per_page) {
+            $companies = Company::where(function ($query) use ($prefectures, $industry, $site_url, $free_keyword, $establish_date_from, $establish_date_to, $page, $rows_per_page) {
                 if($prefectures && $prefectures != 0 )
                    $query->where('address', 'LIKE', $prefectures.'%');
                 if($industry && $industry != 0 )
@@ -62,8 +62,7 @@ class CompanyController extends Controller
                 if($page)
                     $query->skip($rows_per_page * $page);
             })->paginate($rows_per_page);
-            // $total_companies = $src_companies->get();
-            // $companies = $src_companies->paginate($rows_per_page);
+
             return response()->json([
                 'success' => true,
                 'data' => $companies
