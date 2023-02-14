@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 
 import { useTheme } from '@mui/material/styles';
 
-import {MenuItem, Select, FormControl, InputLabel, TextField, Box, Table, TableHead, TableBody, TableCell, TableContainer, TablePagination, TableRow, Paper, IconButton} from '@mui/material';
+import {MenuItem, Select, FormControl, InputLabel, TextField, Box, Table, TableHead, TableBody, TableCell, TableContainer, TablePagination, TableRow, Paper, IconButton, Typography} from '@mui/material';
 
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
@@ -20,11 +20,11 @@ const columns = [
   // { id: 'furi', label: 'Furi', minWidth: 200, align: 'center' },
   { id: 'en_name', label: '英文名', minWidth: 200, align: 'center' },
   { id: 'category_id', label: '業種', minWidth: 150, align: 'center' },
-  { id: 'url', label: 'URL', minWidth: 300, align: 'center' },
-  { id: 'contact_url', label: 'お問い合わせフォーム', minWidth: 300, align: 'center' },
+  { id: 'url', label: 'URL', minWidth: 200, align: 'center' },
+  { id: 'contact_url', label: 'お問い合わせフォーム', minWidth: 200, align: 'center' },
   // { id: 'zip', label: 'Zip', minWidth: 100, align: 'center' },
   // { id: 'pref', label: 'Pref', minWidth: 80, align: 'center' },
-  { id: 'address', label: '住所', minWidth: 300, align: 'center' },
+  { id: 'address', label: '住所', minWidth: 200, align: 'center' },
   { id: 'tel', label: 'TEL', minWidth: 150, align: 'center' },
   // { id: 'dainame', label: 'Dainame', minWidth: 150, align: 'center' },
   // { id: 'corporate_number', label: 'Corporate Number', minWidth: 150, align: 'center' },
@@ -40,11 +40,11 @@ const columns = [
 ];
 
 const units = [
-  {id: 1, label: '全部'},
-  {id: 2, label: '5000万円以下'},
-  {id: 3, label: '5000万円以上'},
-  {id: 4, label: '1億円以上'},
-  {id: 5, label: '10億円以上'},
+  {id: 0, label: '全部'},
+  {id: 1, label: '5000万円以下'},
+  {id: 2, label: '5000万円以上'},
+  {id: 3, label: '1億円以上'},
+  {id: 4, label: '10億円以上'},
   {id: 5, label: '50億円以上'}
 ]
 
@@ -101,11 +101,11 @@ const prefecturesList = [
 
 const industryList = [
   {id: 0, label: '全部', value: 0 },
-  {id: 1, label: 'エンタメ業界', value: 'エンタメ業界の会社' },
-  {id: 2, label: 'IT業界', value: 'IT業界の会社'},
-  {id: 3, label: 'アパレル・美容業界', value: 'アパレル・美容業界の会社'},
-  {id: 4, label: '建設・工事業界', value: '建設・工事業界の会社'},
-  {id: 5, label: 'コンサルティング業界の会社', value: 'コンサルティング業界'}
+  {id: 1, label: 'エンタメ業界', value: 'エンタメ業界' },
+  {id: 2, label: 'IT業界', value: 'IT業界'},
+  {id: 3, label: 'アパレル・美容業界', value: 'アパレル・美容業界'},
+  {id: 4, label: '建設・工事業界', value: '建設・工事業界'},
+  {id: 5, label: 'コンサルティング業界の会社', value: 'コンサルティング業界の会社'}
 ];
 
 function TablePaginationActions(props) {
@@ -173,7 +173,7 @@ const Home = (props) => {
   const dispatch = useDispatch()
   const [companies, setCompanies] = useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(100);
   const [totalCount, setTotalCount]=useState(0);
   
   // search params
@@ -181,7 +181,7 @@ const Home = (props) => {
     prefectures : 0,
     industry : 0,
     siteUrl : 0,
-    capital : '',
+    capital : 0,
     amountOfSales : '',
     freeKeyword : '',
     establishDateFrom: '',
@@ -206,6 +206,8 @@ const Home = (props) => {
   };
 
   const fectchCompanyData = async() => {
+    console.log('--- search params ---')
+    console.log(searchParams)
     searchParams.page = Number(page) + 1;
     searchParams.rowsPerPage = rowsPerPage;
     dispatch(startAction())
@@ -238,7 +240,7 @@ const Home = (props) => {
     <div className="page-header">
       <div className="page-block">
         <div className="row align-items-center">
-          <div className="col-md-12">
+          <div className="col-md-10">
             <div className="page-header-title">
               <FormControl sx={{ m: 1, minWidth: 250 }}>
                 <InputLabel id="demo-simple-select-label">都道府県</InputLabel>
@@ -341,6 +343,7 @@ const Home = (props) => {
                   id="date"
                   label="設立年月日"
                   type="date"
+                  name="establishDateFrom"
                   defaultValue={searchParams.establishDateFrom}
                   onChange={handleChange}
                   InputLabelProps={{
@@ -354,6 +357,7 @@ const Home = (props) => {
                   id="date"
                   label="設立年月日"
                   type="date"
+                  name="establishDateTo"
                   defaultValue={searchParams.establishDateTo}
                   onChange={handleChange}
                   InputLabelProps={{
@@ -361,7 +365,13 @@ const Home = (props) => {
                   }}
                 />
               </FormControl>
+
+              
             </div>
+          </div>
+          <div className="col-md-2 text-center">
+              <Typography variant="h5" gutterBottom>該当件数</Typography>
+              <Typography variant="h3">{totalCount}<span style={{fontSize: '15px'}}>件</span></Typography>
           </div>
         </div>
       </div>
@@ -379,7 +389,7 @@ const Home = (props) => {
                   <div className="col-md-12">
                     <div className="table_container">
                       <Paper sx={{ width: '100%' }}>
-                        <TableContainer sx={{ maxHeight: 440 }}>
+                        <TableContainer sx={{ maxHeight: 500 }}>
                           <Table stickyHeader aria-label="sticky table">
                             <TableHead>
                               <TableRow>

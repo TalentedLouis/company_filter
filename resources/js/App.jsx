@@ -40,8 +40,8 @@ export default function App(){
           {/* <Route path="/article" element={<ProtectedRoute><Article /></ProtectedRoute>} />
           <Route path="/company" element={<ProtectedRoute><Company /></ProtectedRoute>} />
           <Route path="/construction/:house" element={<ProtectedRoute><Construction /></ProtectedRoute>} />
-          <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
-          <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} /> */}
+          <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />*/}
+          <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} /> 
         </Route>
       </Routes>
 

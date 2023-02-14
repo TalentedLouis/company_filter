@@ -78,9 +78,9 @@ const Header = () => {
           </li>
         </ul>
         <ul className="navbar-nav ml-auto">
-          <Badge badgeContent={4} color="primary">
+          {/* <Badge badgeContent={4} color="primary">
             <MailIcon color="action" />
-          </Badge>
+          </Badge> */}
           <li>
             <div className="drp-user dropdown">
               <button onClick={() => setShowUserBox((old) => !old)} aria-haspopup="true" aria-expanded="true" id="dropdown-basic" type="button" className="dropdown-toggle btn btn-link" style={{paddingRight: '5px'}}><FiSettings/></button>

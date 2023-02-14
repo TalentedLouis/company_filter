@@ -6,6 +6,7 @@ use App\Models\Company;
 use Illuminate\Http\Request;
 
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 
 class CompanyController extends Controller
 {
@@ -16,7 +17,6 @@ class CompanyController extends Controller
      */
     public function index(Request $request )
     {
-        // return $request;
         if($request){
             $rows_per_page = $request-> rowsPerPage;
             $page = $request -> page;
@@ -34,7 +34,7 @@ class CompanyController extends Controller
                 if($prefectures && $prefectures != 0 )
                    $query->where('address', 'LIKE', $prefectures.'%');
                 if($industry && $industry != 0 )
-                   $query->where('category_id', $industry);
+                   $query->where('category_id', 'LIKE', '%'.$industry.'%');
                 if($free_keyword)
                    $query->where('category_txt', 'Like', '%'.$free_keyword.'%');
                 if($site_url === 1)
@@ -45,13 +45,11 @@ class CompanyController extends Controller
                     $query->skip($rows_per_page * $page);
             })->paginate($rows_per_page);
 
-
             return response()->json([
                 'success' => true,
                 'data' => $companies
             ]);
-        }
-        
+        }   
     }
 
     /**

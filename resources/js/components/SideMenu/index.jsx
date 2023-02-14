@@ -240,15 +240,15 @@ const SideMenu = () => {
               </StyledTopMenuItem>
           }
           <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Home') }</StyledMenuItem>
-          <StyledMenuItem icon={<FaEdit/>} component={<Link to="/article" />}>{ t('Forms') }</StyledMenuItem>
-          <StyledMenuItem icon={<FaTv/>} component={<Link to="/home" />}>{ t('UI Elements') }</StyledMenuItem>
+          <StyledMenuItem icon={<FaUsers />} component={<Link to="/users" />}>{ t('Users') }</StyledMenuItem>
+          {/* <StyledMenuItem icon={<FaTv/>} component={<Link to="/home" />}>{ t('UI Elements') }</StyledMenuItem>
           <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Tables') }</StyledMenuItem>
           <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Data Presentation') }</StyledMenuItem>
           <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Layouts') }</StyledMenuItem>
           <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Additional Pages') }</StyledMenuItem>
           <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Extras') }</StyledMenuItem>
           <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Multilevel Menu') }</StyledMenuItem>
-          <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Landing Page Comming Soon') }</StyledMenuItem>
+          <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Landing Page Comming Soon') }</StyledMenuItem> */}
           {/* <StyledMenuItem icon={<FaHome/>} component={<Link to="/article" />}>{ t('Object Management') }</StyledMenuItem>
           <StyledMenuItem icon={<FaRegBuilding />} component={<Link to="/company" />}>{ t('Vendor Management') }</StyledMenuItem>
           <StyledSubMenu icon={<FaGavel />} label={ t('Construction Management') }>
