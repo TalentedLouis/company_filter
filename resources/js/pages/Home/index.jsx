@@ -16,27 +16,27 @@ import { startAction, endAction, showToast } from '../../actions/common'
 import agent from '../../api/'
 
 const columns = [ 
-  { id: 'name', label: 'Name', minWidth: 200, align: 'center' },
-  { id: 'furi', label: 'Furi', minWidth: 200, align: 'center' },
-  { id: 'en_name', label: 'En Name', minWidth: 200, align: 'center' },
-  { id: 'category_id', label: 'Category Id', minWidth: 150, align: 'center' },
+  { id: 'name', label: '会社名', minWidth: 200, align: 'center' },
+  // { id: 'furi', label: 'Furi', minWidth: 200, align: 'center' },
+  { id: 'en_name', label: '英文名', minWidth: 200, align: 'center' },
+  { id: 'category_id', label: '業種', minWidth: 150, align: 'center' },
   { id: 'url', label: 'URL', minWidth: 300, align: 'center' },
-  { id: 'contact_url', label: 'Contact URL', minWidth: 300, align: 'center' },
-  { id: 'zip', label: 'Zip', minWidth: 100, align: 'center' },
-  { id: 'pref', label: 'Pref', minWidth: 80, align: 'center' },
-  { id: 'address', label: 'Address', minWidth: 300, align: 'center' },
-  { id: 'tel', label: 'Tel', minWidth: 150, align: 'center' },
-  { id: 'dainame', label: 'Dainame', minWidth: 150, align: 'center' },
-  { id: 'corporate_number', label: 'Corporate Number', minWidth: 150, align: 'center' },
-  { id: 'established', label: 'Established', minWidth: 150, align: 'center' },
-  { id: 'capital', label: 'Capital', minWidth: 150, align: 'center' },
-  { id: 'earnings', label: 'Earnings', minWidth: 150, align: 'center' },
-  { id: 'employees', label: 'Employees', minWidth: 100, align: 'center' },
-  { id: 'category_txt', label: 'Category TXT', minWidth: 200, align: 'center' },
-  { id: 'houjin_flg', label: 'Houjin Flg', minWidth: 150, align: 'center' },
-  { id: 'status', label: 'Status', minWidth: 150, align: 'center' },
-  { id: 'created', label: 'Created', minWidth: 150, align: 'center' },
-  { id: 'modified', label: 'Modified', minWidth: 150, align: 'center' },
+  { id: 'contact_url', label: 'お問い合わせフォーム', minWidth: 300, align: 'center' },
+  // { id: 'zip', label: 'Zip', minWidth: 100, align: 'center' },
+  // { id: 'pref', label: 'Pref', minWidth: 80, align: 'center' },
+  { id: 'address', label: '住所', minWidth: 300, align: 'center' },
+  { id: 'tel', label: 'TEL', minWidth: 150, align: 'center' },
+  // { id: 'dainame', label: 'Dainame', minWidth: 150, align: 'center' },
+  // { id: 'corporate_number', label: 'Corporate Number', minWidth: 150, align: 'center' },
+  { id: 'established', label: '設立年月日', minWidth: 150, align: 'center' },
+  { id: 'capital', label: '資本金', minWidth: 150, align: 'center' },
+  { id: 'earnings', label: '売上高', minWidth: 150, align: 'center' },
+  // { id: 'employees', label: 'Employees', minWidth: 100, align: 'center' },
+  { id: 'category_txt', label: 'フリーキーワード', minWidth: 200, align: 'center' },
+  // { id: 'houjin_flg', label: 'Houjin Flg', minWidth: 150, align: 'center' },
+  // { id: 'status', label: 'Status', minWidth: 150, align: 'center' },
+  // { id: 'created', label: 'Created', minWidth: 150, align: 'center' },
+  // { id: 'modified', label: 'Modified', minWidth: 150, align: 'center' },
 ];
 
 const units = [
@@ -289,8 +289,8 @@ const Home = (props) => {
                   onChange={handleChange}
                 >
                   <MenuItem value={0}>全部</MenuItem>
-                  <MenuItem value={1}>有</MenuItem>
-                  <MenuItem value={2}>無</MenuItem>
+                  <MenuItem value={1}>有り</MenuItem>
+                  <MenuItem value={2}>無し</MenuItem>
                 </Select>
               </FormControl>
 
@@ -339,7 +339,7 @@ const Home = (props) => {
               <FormControl sx={{ m: 1, minWidth: 250 }}>
                 <TextField
                   id="date"
-                  label="設立年月日 From"
+                  label="設立年月日"
                   type="date"
                   defaultValue={searchParams.establishDateFrom}
                   onChange={handleChange}
@@ -352,7 +352,7 @@ const Home = (props) => {
               <FormControl sx={{ m: 1, minWidth: 250 }}>
                 <TextField
                   id="date"
-                  label="設立年月日 To"
+                  label="設立年月日"
                   type="date"
                   defaultValue={searchParams.establishDateTo}
                   onChange={handleChange}
@@ -372,7 +372,7 @@ const Home = (props) => {
           <div className="col">
             <div className="card">
               <div className="card-header">
-                <h5 className="card-title">Company List</h5>
+                <h5 className="card-title">企業リスト</h5>
               </div>
               <div className="card-body">
                 <div className="row">
