@@ -31,48 +31,13 @@ use Illuminate\Support\Facades\DB;
 
 Route::post('/login', [AuthController::class, 'login'])->name('login.api');
 Route::post('/register', [AuthController::class, 'register'])->name('register.api');
-
+Route::get('/download-csv', [CompanyController::class, 'export_csv']);
 
 Route::middleware('auth:sanctum')->group(function () {
-
-    //articles
-    // Route::get('/articles', [ArticleController::class, 'index']);
-    // Route::post('/articles', [ArticleController::class, 'create']);
-    // Route::put('/articles', [ArticleController::class, 'update']);
-
-    Route::get('articles/autocomplete', [ArticleController::class, 'get_for_autocomplete']);
-    Route::apiResource('articles', ArticleController::class);
-
-    Route::apiResource('budgets', BudgetsController::class);
-
-    Route::get('companies/autocomplete', [CompaniesController::class, 'get_for_autocomplete']);
-    // Route::apiResource('companies', CompaniesController::class);
-
     Route::post('companies', [CompanyController::class, 'index']);
-
-    Route::get('constructions/autocomplete', [ConstructionsController::class, 'get_for_autocomplete']);
-    // Route::get('constructions/run', [ConstructionsController::class, 'run']);
-    Route::apiResource('constructions', ConstructionsController::class);
-
-    Route::get('payments/get_statistics_by_date', [PaymentsController::class, 'get_statistics_by_date']);
-    // Route::get('payments/download_excel', [PaymentsController::class, 'download_excel']);
-    Route::apiResource('payments', PaymentsController::class);
-
     Route::apiResource('roles', RoleController::class);
-
-    Route::apiResource('settings', SetingsController::class);
-
-    Route::apiResource('transfer', TransfersController::class);
-
     Route::apiResource('users', UserController::class);
-
     Route::apiResource('user-role', UserRoleController::class);
-
-    Route::apiResource('menu', MenuController::class);
-
-    Route::get('systemlog/get_budget_log_from_article_id', [SystemLogController::class, 'get_budget_log_from_article_id']);
-    Route::get('systemlog/get_construction_log_from_house_value', [SystemLogController::class, 'get_construction_log_from_house_value']);
-    Route::apiResource('systemlog', SystemLogController::class);
 });
 
 

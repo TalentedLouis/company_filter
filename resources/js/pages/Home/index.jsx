@@ -18,6 +18,8 @@ import agent from '../../api/';
 
 import { CSVLink } from "react-csv";
 
+import { API_URL } from "../../constants/";
+
 const columns = [ 
   { id: 'name', label: '会社名', minWidth: 200, align: 'center' },
   // { id: 'furi', label: 'Furi', minWidth: 200, align: 'center' },
@@ -50,7 +52,7 @@ const headers = [
   { label: 'URL', key: 'url'},
   { label: 'お問い合わせフォーム', key: 'contact_url'},
   { label: 'Zip', key: 'zip'},
-  { label: 'Pref', key: 'pref'},
+  // { label: 'Pref', key: 'pref'},
   { label: '住所', key: 'address'},
   { label: 'TEL', key: 'tel'},
   { label: 'Dainame', key: 'dainame'},
@@ -60,8 +62,8 @@ const headers = [
   { label: '売上高', key: 'earnings'},
   { label: 'Employees', key: 'employees'},
   { label: 'フリーキーワード', key: 'category_txt'},
-  { label: 'Houjin Flg', key: 'houjin_flg'},
-  { label: 'Status', key: 'status'},
+  // { label: 'Houjin Flg', key: 'houjin_flg'},
+  // { label: 'Status', key: 'status'},
   { label: 'Created', key: 'created'},
   { label: 'Modified', key: 'modified'}
 ];
@@ -260,6 +262,18 @@ const Home = (props) => {
     setSearchParams({...searchParams, [event.target.name]: event.target.value});
   };
 
+  const downloadCSV = () => {
+    window.location.href= API_URL + "/download-csv?prefectures=" + searchParams.prefectures + 
+                                    "&industry=" + searchParams.industry + 
+                                    "&siteUrl=" + Number(searchParams.siteUrl) + 
+                                    "&capital=" + searchParams.capital + 
+                                    "&amountOfSales=" + searchParams.amountOfSales + 
+                                    "&freeKeyword=" + searchParams.freeKeyword + 
+                                    "&establishDateFrom=" + searchParams.establishDateFrom + 
+                                    "&establishDateTo=" + searchParams.establishDateTo;
+  }
+
+
   return (
     <>
     <div className="page-header">
@@ -406,12 +420,14 @@ const Home = (props) => {
             <div className="card">
               <div className="card-header" style={{display: 'flex', justifyContent:'space-between'}}>
                 <h5 className="card-title">企業リスト</h5>
-                {
+                <div style={{cursor: 'pointer'}} onClick={()=>downloadCSV()}>
+                  <FileDownloadIcon />CSV
+                </div>
+                {/* {
                   companies && <CSVLink data={companies} headers={headers} filename={"企業リスト.csv"}>
-                    <FileDownloadIcon />CSV File
-                    {/* <img src='/assets/image/icon_csv.png' style={{width:'30px', height: '30px'}} alt="csv_icon" /> */}
+                    <img src='/assets/image/icon_csv.png' style={{width:'30px', height: '30px'}} alt="csv_icon" />
                   </CSVLink>
-                }
+                } */}
               </div>
               <div className="card-body">
                 <div className="row">
