@@ -35,7 +35,7 @@ const columns = [
   { id: 'capital', label: '資本金', minWidth: 150, align: 'center' },
   { id: 'earnings', label: '売上高', minWidth: 150, align: 'center' },
   // { id: 'employees', label: 'Employees', minWidth: 100, align: 'center' },
-  { id: 'category_txt', label: 'フリーキーワード', minWidth: 200, align: 'center' },
+  { id: 'category_txt', label: 'フリーキーワード', minWidth: 300, align: 'center' },
   // { id: 'houjin_flg', label: 'Houjin Flg', minWidth: 150, align: 'center' },
   // { id: 'status', label: 'Status', minWidth: 150, align: 'center' },
   // { id: 'created', label: 'Created', minWidth: 150, align: 'center' },
@@ -418,7 +418,7 @@ const Home = (props) => {
                   <div className="col-md-12">
                     <div className="table_container">
                       <Paper sx={{ width: '100%' }}>
-                        <TableContainer sx={{ maxHeight: 500 }}>
+                        <TableContainer sx={{ maxHeight: 700 }}>
                           <Table stickyHeader aria-label="sticky table">
                             <TableHead>
                               <TableRow>
