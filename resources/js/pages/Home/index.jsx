@@ -272,6 +272,16 @@ const Home = (props) => {
                                     "&establishDateFrom=" + searchParams.establishDateFrom + 
                                     "&establishDateTo=" + searchParams.establishDateTo;
   }
+  const downloadExcel = () => {
+    window.location.href= API_URL + "/download-excel?prefectures=" + searchParams.prefectures + 
+                                    "&industry=" + searchParams.industry + 
+                                    "&siteUrl=" + Number(searchParams.siteUrl) + 
+                                    "&capital=" + searchParams.capital + 
+                                    "&amountOfSales=" + searchParams.amountOfSales + 
+                                    "&freeKeyword=" + searchParams.freeKeyword + 
+                                    "&establishDateFrom=" + searchParams.establishDateFrom + 
+                                    "&establishDateTo=" + searchParams.establishDateTo;
+  }
 
 
   return (
@@ -420,8 +430,13 @@ const Home = (props) => {
             <div className="card">
               <div className="card-header" style={{display: 'flex', justifyContent:'space-between'}}>
                 <h5 className="card-title">企業リスト</h5>
-                <div style={{cursor: 'pointer'}} onClick={()=>downloadCSV()}>
-                  <FileDownloadIcon />CSV
+                <div style={{display: 'flex'}}>
+                  <div style={{cursor: 'pointer', marginRight: '20px'}} onClick={()=>downloadExcel()}>
+                    <FileDownloadIcon />EXCEL
+                  </div>
+                  <div style={{cursor: 'pointer'}} onClick={()=>downloadCSV()}>
+                    <FileDownloadIcon />CSV
+                  </div>
                 </div>
                 {/* {
                   companies && <CSVLink data={companies} headers={headers} filename={"企業リスト.csv"}>
