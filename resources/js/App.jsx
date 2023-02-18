@@ -29,7 +29,7 @@ import reportWebVitals from './reportWebVitals'
 import './index.scss'
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { zhCN } from '@mui/material/locale';
+import { jaJP } from '@mui/material/locale';
 
 const theme = createTheme(
   {
@@ -37,7 +37,7 @@ const theme = createTheme(
       primary: { main: '#1976d2' },
     },
   },
-  zhCN,
+  jaJP,
 );
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)

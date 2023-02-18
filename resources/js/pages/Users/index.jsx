@@ -65,7 +65,7 @@ const Users = () => {
           return '';
         }
 
-        const valueFormatted = params.value == 1 ? 'Admin' : 'User';
+        const valueFormatted = params.value == 1 ? '管理者' : 'ユーザー';
         return valueFormatted;
       },
     }, {
