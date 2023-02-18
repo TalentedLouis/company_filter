@@ -232,7 +232,7 @@ const SideMenu = () => {
                 icon={<div className={styles.bg_trendingup}><FiTrendingUp /></div>}
               >
                 <div className={styles.b_brand}>
-                  <span className={styles.b_text}>{ t('Payment') }</span>
+                  <span className={styles.b_text}>{ t('Title') }</span>
                   {
                     !collapsed &&
                       <div className={`${styles.mobile_menu} ${(clickedMobileMenu ? styles.on : '')}`} onClick={() => clickMobileMenu()}><span></span></div>
@@ -240,40 +240,20 @@ const SideMenu = () => {
                 </div>
               </StyledTopMenuItem>
           }
-          <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Home') }</StyledMenuItem>
+          <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Company Management') }</StyledMenuItem>
           {
             auth.currentUser.role == 1
             ?
-            <StyledMenuItem icon={<FaUsers />} component={<Link to="/users" />}>{ t('Users') }</StyledMenuItem>
+            <StyledMenuItem icon={<FaUsers />} component={<Link to="/users" />}>{ t('User Management') }</StyledMenuItem>
             :
             null
           }
-          {/* <StyledMenuItem icon={<FaTv/>} component={<Link to="/home" />}>{ t('UI Elements') }</StyledMenuItem>
-          <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Tables') }</StyledMenuItem>
-          <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Data Presentation') }</StyledMenuItem>
-          <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Layouts') }</StyledMenuItem>
-          <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Additional Pages') }</StyledMenuItem>
-          <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Extras') }</StyledMenuItem>
-          <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Multilevel Menu') }</StyledMenuItem>
-          <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Landing Page Comming Soon') }</StyledMenuItem> */}
-          {/* <StyledMenuItem icon={<FaHome/>} component={<Link to="/article" />}>{ t('Object Management') }</StyledMenuItem>
-          <StyledMenuItem icon={<FaRegBuilding />} component={<Link to="/company" />}>{ t('Vendor Management') }</StyledMenuItem>
-          <StyledSubMenu icon={<FaGavel />} label={ t('Construction Management') }>
-            <StyledMenuItem component={<Link to="/construction/1" />}>{ t('Housing construction list') }</StyledMenuItem>
-            <StyledMenuItem component={<Link to="/construction/0" />}>{ t('Building construction list') }</StyledMenuItem>
-          </StyledSubMenu>
-          <StyledSubMenu icon={<FaYenSign />} label={ t('Input Management') }>
-            <StyledMenuItem component={<Link to="/payment" />}>{ t('Input confirmation') }</StyledMenuItem>
-            <StyledMenuItem>{ t('Payment confirmation') }</StyledMenuItem>
-          </StyledSubMenu>
-          <StyledSubMenu icon={<FaRegClone />} label={ t('Summing') }>
+
+          {/* <StyledSubMenu icon={<FaRegClone />} label={ t('Summing') }>
             <StyledMenuItem>{ t('Whole') }</StyledMenuItem>
             <StyledMenuItem>{ t('Annual A3') }</StyledMenuItem>
             <StyledMenuItem>{ t('Monthly A4') }</StyledMenuItem>
-          </StyledSubMenu>
-          <StyledMenuItem icon={<FaUniversity />}>{ t('Bank format output') }</StyledMenuItem>
-          <StyledMenuItem icon={<FaCog />}>{ t('Setting') }</StyledMenuItem>
-          <StyledMenuItem icon={<FaUsers />} component={<Link to="/users" />}>{ t('Users') }</StyledMenuItem> */}
+          </StyledSubMenu> */}
         </Menu>
       </StyledSidebar>
       

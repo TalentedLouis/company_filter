@@ -25,7 +25,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         currentUser: {
           id: action.user.id,
           first_name: action.user.first_name,
-          last_name: action.user.last_name,
+          // last_name: action.user.last_name,
           uid: action.user.uid,
           email: action.user.email,
           phone: action.user.phone,
@@ -39,7 +39,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         currentUser: {
           id: 0,
           first_name: '',
-          last_name: '',
+          // last_name: '',
           uid: '',
           email: '',
           phone: '',

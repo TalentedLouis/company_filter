@@ -28,6 +28,18 @@ import reducers from './reducers/index'
 import reportWebVitals from './reportWebVitals'
 import './index.scss'
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { zhCN } from '@mui/material/locale';
+
+const theme = createTheme(
+  {
+    palette: {
+      primary: { main: '#1976d2' },
+    },
+  },
+  zhCN,
+);
+
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore)
 const store = createStoreWithMiddleware(reducers)
 
@@ -66,7 +78,9 @@ createRoot(el).render(
     <React.StrictMode>
       <Provider store={store}>
         <ProSidebarProvider>
-          <App />
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
         </ProSidebarProvider>
       </Provider>
     </React.StrictMode>

@@ -1,6 +1,5 @@
 {
     "Payment management system":"支払い管理システム",
-    "Payment":"企業リスト",
     "Object Management":"物件管理",
     "Vendor Management":"業者管理",
     "Construction Management":"工事管理",
@@ -15,17 +14,18 @@
     "Monthly A4":"工事別 月 A3",
     "Bank format output":"全銀フォーマット出力",
     "Setting":"設定",
-    "Users":"使用者管理",
 
-    "Home" : "企業管理",
-    "Forms" : "Forms",
-    "UI Elements" : "UI Elements",
-    "Tables" : "Tables",
-    "Data Presentation" : "Data Presentation",
-    "Layouts" : "Layouts",
-    "Additional Pages" : "Additional Pages",
-    "Extras" : "Extras",
-    "Multilevel Menu" : "Multilevel Menu",
+    "Title":"企業リスト",
+    
+    "Login":"ログイン",
+    "SignUp":"新規登録",
+    "Password":"パスワード",
+    "Password Confirmation":"パスワード確認",
+    "Name":"お名前",
+    "Already have an account?":"すでにアカウントをお持ちですか？",
+
+    "Company Management" : "企業管理",
+    "User Management":"ユーザー管理",
 
     "List" : "一覧",
     "User Name" : "ユーザー名",

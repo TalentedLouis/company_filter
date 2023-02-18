@@ -19,7 +19,7 @@ class AuthController extends Controller
 	{
 		$validator = Validator::make($request->all(), [
 			'first_name' => 'required|string|max:255',
-			'last_name' => 'required|string|max:255',
+			// 'last_name' => 'required|string|max:255',
 			'email' => 'required|string|email|max:255|unique:users',
 			'password' => 'required|string|min:6|confirmed',
 		]);
@@ -56,7 +56,7 @@ class AuthController extends Controller
 			'token' => $token,
 			'user' => $user,
 			'roles' => 2,
-      'message' => 'User registered successfully.'
+      'message' => 'ユーザー登録が完了しました。'
 		];
 		return response($response, 200);
 	}
@@ -89,7 +89,7 @@ class AuthController extends Controller
 						'token' => $token,
 						'user' => $user,
 						'role' => $role_id,
-                        'message' => 'User logged in successfully.'
+            'message' => 'ユーザーが正常にログインしました。'
 					];
 
 					return response($response, 200);
@@ -101,21 +101,21 @@ class AuthController extends Controller
 					// 	return response($response, 422);
 				} else {
 					$response = [
-						"message" => "Password mismatch",
+						"message" => "パスワードが一致しません。",
 						"success" => false
 					];
 					return response($response, 422);
 				}
 			} else {
 				$response = [
-					"message" => 'User has been disabled',
+					"message" => 'このアカウントは無効になっています。',
 					"success" => false
 				];
 				return response($response, 422);
 			}
 		} else {
 			$response = [
-				"message" => 'User does not exist',
+				"message" => 'ユーザーが存在しません',
 				"success" => false
 			];
 			return response($response, 422);

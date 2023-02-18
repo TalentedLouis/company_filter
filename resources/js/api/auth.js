@@ -14,9 +14,8 @@ const authApi = {
     password
   }),
 
-  register: (first_name, last_name, email, password, password_confirmation) => axios.post(`${API_URL}/register`, {
+  register: (first_name, email, password, password_confirmation) => axios.post(`${API_URL}/register`, {
     first_name,
-    last_name,
     email,
     password,
     password_confirmation

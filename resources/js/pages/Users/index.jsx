@@ -41,14 +41,16 @@ const Users = () => {
       editable: false,
       flex: 1,
       renderCell: (params) => {
-        return params.row.first_name + ' ' + params.row.last_name;
+        return params.row.first_name;
       },
-    }, {
-      field: 'uid',
-      headerName: t('User ID'),
-      editable: false,
-      flex: 1,
-    }, {
+    }, 
+    // {
+    //   field: 'uid',
+    //   headerName: t('User ID'),
+    //   editable: false,
+    //   flex: 1,
+    // },
+    {
       field: 'email',
       headerName: t('Email'),
       editable: false,
