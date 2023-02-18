@@ -88,13 +88,13 @@ const Header = () => {
                 showUserBox &&
                   <div aria-labelledby='dropdown-basic' className='profile-notification dropdown-menu show dropdown-menu-right' x-placement='bottom-end' style={{position: 'absolute', willChange: 'transform', top: 0, left: 0, transform: 'translate3d(-249px, 70px, 0px)'}}>
                     <div className='pro-head'>
-                      <span>{auth.currentUser.first_name + ' ' + auth.currentUser.last_name}</span>
+                      <span>{auth.currentUser.first_name}</span>
                       <a className="dud-logout" title="Logout" onClick={() => submitLogout()}><FiLogOut/></a>
                     </div>
-                    <ul className="pro-body">
+                    {/* <ul className="pro-body">
                       <li><Link className='dropdown-item' to={'/profile'}><FiUser />&nbsp;&nbsp;&nbsp;&nbsp;Profile</Link></li>
                       <li><Link className='dropdown-item' to={'/profile'}><BsKey />&nbsp;&nbsp;&nbsp;&nbsp;Change Password</Link></li>
-                    </ul>
+                    </ul> */}
                   </div>
               }
             </div>
