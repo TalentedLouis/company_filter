@@ -33,11 +33,11 @@ class AuthController extends Controller
 
 		// generate unique id for search
 		$user->uid = $user->first_name . sprintf('%05d', $user->id);
-		$user->disabled = 0;
+		$user->disabled = 1;
 		$user->save();
 
 		// availibility
-		$user->disabled = 0;
+		$user->disabled = 1;  // 0 enable 1 disable
 		$user->enabled_at = Carbon::now()->format('Y-m-d H:i:s');
 
 		// DB::table('user_role')->insert([
@@ -46,17 +46,17 @@ class AuthController extends Controller
 		// ]);
 
         // should be determined later
-        $role_id = 1;
+		$role_id = 2;
 
-        $user->roles()->attach($role_id);
+		$user->roles()->attach($role_id);
 
 		$token = $user->createToken('Laravel Password Grant Client')->accessToken;
 		$response = [
 			'success' => true,
 			'token' => $token,
 			'user' => $user,
-			'roles' => 0,
-            'message' => 'User registered successfully.'
+			'roles' => 2,
+      'message' => 'User registered successfully.'
 		];
 		return response($response, 200);
 	}
@@ -70,7 +70,7 @@ class AuthController extends Controller
 		if ($validator->fails()) {
 			return response(['errors' => $validator->errors()->all()], 422);
 		}
-		$user = User::where([['email', $request->email]])->first();
+		$user = User::where('email', $request->email)->first();
 		if ($user) {
 			if ($user->disabled == 0) {
 				if (Hash::check($request->password, $user->password)) {

@@ -327,18 +327,18 @@ const commonApi = {
             },
         }),
 
-    // updateAccountStatus: (id, disabled) =>
-    //     axios.put(
-    //         `${API_URL}/users/${id}`,
-    //         {
-    //             disabled,
-    //         },
-    //         {
-    //             headers: {
-    //                 Authorization: "Bearer " + localStorage.getItem("token"),
-    //             },
-    //         }
-    //     ),
+    updateAccountStatus: (id, disabled) =>
+        axios.put(
+            `${API_URL}/users/${id}`,
+            {
+                disabled,
+            },
+            {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token"),
+                },
+            }
+        ),
 };
 
 export default commonApi;

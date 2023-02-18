@@ -26,5 +26,13 @@
     "Additional Pages" : "Additional Pages",
     "Extras" : "Extras",
     "Multilevel Menu" : "Multilevel Menu",
-    "Landing Page Comming Soon" : "Landing Page Comming Soon"
+
+    "List" : "一覧",
+    "User Name" : "ユーザー名",
+    "User ID" : "ユーザーID",
+    "Email" : "メール",
+    "Role" : "役割",
+    "Status" : "スターテス",
+    "Disabled" : "非アクティブ",
+    "Enabled" : "アクティブ"
 }

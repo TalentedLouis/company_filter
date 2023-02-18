@@ -22,6 +22,7 @@ import ToastMsg from './components/ToastMsg'
 
 import NonProtectedRoute from './utils/NonProtectedRoute';
 import ProtectedRoute from './utils/ProtectedRoute';
+import AdminRoute from './utils/AdminRoute';
 
 import reducers from './reducers/index'
 import reportWebVitals from './reportWebVitals'
@@ -37,11 +38,7 @@ export default function App(){
         <Route exact path="/" element={<NonProtectedRoute><Login /></NonProtectedRoute>} />
         <Route element={<SideLayout/>}>
           <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-          {/* <Route path="/article" element={<ProtectedRoute><Article /></ProtectedRoute>} />
-          <Route path="/company" element={<ProtectedRoute><Company /></ProtectedRoute>} />
-          <Route path="/construction/:house" element={<ProtectedRoute><Construction /></ProtectedRoute>} />
-          <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />*/}
-          <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} /> 
+          <Route path="/users" element={<AdminRoute><Users /></AdminRoute>} /> 
         </Route>
       </Routes>
 

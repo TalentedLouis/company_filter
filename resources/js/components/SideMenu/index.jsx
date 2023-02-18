@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { Sidebar, Menu, MenuItem, useProSidebar, SubMenu } from 'react-pro-sidebar';
 import { FaHome, FaRegBuilding, FaGavel, FaYenSign, FaRegClone, FaUniversity, FaCog, FaUsers, FaEdit, FaTv, FaTable } from "react-icons/fa";
@@ -167,7 +168,7 @@ const StyledMenuItem = styled(MenuItem)`
 
 const SideMenu = () => {
   const { t, tChoice } = useLaravelReactI18n();
-
+  const auth = useSelector(state => state.auth)
   const sidebarRef = useRef(null);
 
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } = useProSidebar();
@@ -210,7 +211,7 @@ const SideMenu = () => {
       }
     }
   }
-
+  
   return (
     <>
       <StyledSidebar 
@@ -240,7 +241,13 @@ const SideMenu = () => {
               </StyledTopMenuItem>
           }
           <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Home') }</StyledMenuItem>
-          <StyledMenuItem icon={<FaUsers />} component={<Link to="/users" />}>{ t('Users') }</StyledMenuItem>
+          {
+            auth.currentUser.role == 1
+            ?
+            <StyledMenuItem icon={<FaUsers />} component={<Link to="/users" />}>{ t('Users') }</StyledMenuItem>
+            :
+            null
+          }
           {/* <StyledMenuItem icon={<FaTv/>} component={<Link to="/home" />}>{ t('UI Elements') }</StyledMenuItem>
           <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Tables') }</StyledMenuItem>
           <StyledMenuItem icon={<FaHome/>} component={<Link to="/home" />}>{ t('Data Presentation') }</StyledMenuItem>
