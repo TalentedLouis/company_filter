@@ -34,5 +34,19 @@
     "Role" : "役割",
     "Status" : "スターテス",
     "Disabled" : "非アクティブ",
-    "Enabled" : "アクティブ"
+    "Enabled" : "アクティブ",
+
+    "Change Password":"パスワードの変更",
+    "Old Password":"現在のパスワード",
+    "New Password":"新しいパスワード",
+    "Confirm Password":"パスワード確認",
+    "Password mismatch":"パスワードが一致しません。",
+    "Invalid password":"無効なパスワード",
+    "Password changed successfully":"パスワードを変更しました。",
+    "Please insert old password correctly":"現在のパスワードを正しく入力ください。",
+
+    "Yes":"はい",
+    "No":"いいえ",
+    "Save":"保存",
+    "Cancel":"キャンセル"
 }

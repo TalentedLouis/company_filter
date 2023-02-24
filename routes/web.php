@@ -21,26 +21,10 @@ Route::get('/home', function () {
     return view('welcome');
 });
 
-Route::get('/menu', function () {
-    return view('welcome');
-});
-
 Route::get('/users', function () {
     return view('welcome');
 });
 
-Route::get('/article', function () {
-    return view('welcome');
-});
-
-Route::get('/company', function () {
-    return view('welcome');
-});
-
-Route::get('/construction/{number}', function () {
-    return view('welcome');
-});
-
-Route::get('/payment', function () {
+Route::get('/changePassword', function () {
     return view('welcome');
 });

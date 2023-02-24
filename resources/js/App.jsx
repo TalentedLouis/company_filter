@@ -11,11 +11,8 @@ import { ProSidebarProvider } from 'react-pro-sidebar';
 import SideLayout from './components/SideLayout'
 import Login from './pages/Login'
 import Home from './pages/Home'
-import Article from './pages/Article'
-import Company from './pages/Company'
-import Construction from './pages/Construction'
-import Payment from './pages/Payment'
 import Users from './pages/Users'
+import ChangePassword from './pages/ChangePassword';
 
 import Preloading from './components/Preloading'
 import ToastMsg from './components/ToastMsg'
@@ -50,10 +47,10 @@ export default function App(){
         <Route exact path="/" element={<NonProtectedRoute><Login /></NonProtectedRoute>} />
         <Route element={<SideLayout/>}>
           <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-          <Route path="/users" element={<AdminRoute><Users /></AdminRoute>} /> 
+          <Route path="/users" element={<AdminRoute><Users /></AdminRoute>} />
+          <Route path="/changePassword" element={<AdminRoute><ChangePassword /></AdminRoute>} />
         </Route>
       </Routes>
-
       <Preloading />
       <ToastMsg />
     </Router>

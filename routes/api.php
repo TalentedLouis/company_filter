@@ -39,6 +39,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('roles', RoleController::class);
     Route::apiResource('users', UserController::class);
     Route::apiResource('user-role', UserRoleController::class);
+    Route::post('/changePwd', [AuthController::class, 'changePwd']);
 });
 
 

@@ -11,18 +11,22 @@ import MailIcon from '@mui/icons-material/Mail';
 
 import styles from './Header.module.scss';
 
+import { useLaravelReactI18n } from 'laravel-react-i18n'
+
 import {logout} from './../../actions/auth'
 
 const Header = () => {
-
+  const auth = useSelector(state => state.auth)
+  
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
-  const auth = useSelector(state => state.auth)
+  
   const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } = useProSidebar()
 
   const [showUserBox, setShowUserBox] = useState(false)
   const [fullscreen, setFullscreen] = useState(false)
+
+  const { t, tChoice } = useLaravelReactI18n();
 
   const  goInFullscreen = (el) => {
     if(el.requestFullscreen)
@@ -91,10 +95,15 @@ const Header = () => {
                       <span>{auth.currentUser.first_name}</span>
                       <a className="dud-logout" title="Logout" onClick={() => submitLogout()}><FiLogOut/></a>
                     </div>
-                    {/* <ul className="pro-body">
-                      <li><Link className='dropdown-item' to={'/profile'}><FiUser />&nbsp;&nbsp;&nbsp;&nbsp;Profile</Link></li>
-                      <li><Link className='dropdown-item' to={'/profile'}><BsKey />&nbsp;&nbsp;&nbsp;&nbsp;Change Password</Link></li>
-                    </ul> */}
+                    {
+                      auth.currentUser.role == 1
+                      ?
+                      <ul className="pro-body">
+                        <li><Link className='dropdown-item' to={'/changePassword'}><BsKey />&nbsp;&nbsp;&nbsp;&nbsp;{t('Change Password')}</Link></li>
+                      </ul>
+                      :
+                      null
+                    }
                   </div>
               }
             </div>
