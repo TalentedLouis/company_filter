@@ -73,7 +73,6 @@ const Users = () => {
       headerName: t('Status'),
       flex: 1,
       renderCell: (params) => {
-        console.log(params)
         if(params.row.role != 1){
           if(params.row.disabled == 1) {
             return <a className="table_user_disable_edit_btn" onClick={() => updateAccountStatus(params.row.id, 0)}>{ t('Disabled') }</a>

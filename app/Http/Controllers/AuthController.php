@@ -167,7 +167,7 @@ class AuthController extends Controller
 			'new_pwd' => 'required|string|min:6',
 		]);
 		if($validator->fails()) {
-				return respons()->json([
+				return response()->json([
 						'success' => false,
 						'message' => 'Invalid password'
 				]);
